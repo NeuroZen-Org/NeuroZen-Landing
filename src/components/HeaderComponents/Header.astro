@@ -3,6 +3,7 @@ import NeuroZenLogo from "@/assets/images/Principales/Logo.png";
 import NeuroZenText from "@/assets/images/Principales/NeuroZen_texto.png";
 import HamburgerLogo from "@/assets/Icons/hamburguesa.svg";
 import LanguageSwitcher from "./ui/LanguageSwitcher.astro";
+import MobileMenu from "./ui/MobileMenu.astro";
 ---
 
 <header class="flex w-full p-5 items-start bg-[#033612b6]">
@@ -22,15 +23,19 @@ import LanguageSwitcher from "./ui/LanguageSwitcher.astro";
 
     <div class="flex gap-4 items-center">
       <LanguageSwitcher />
-      <img
-        class="w-8 bg-[#52cf78b6] rounded-md cursor-pointer"
-        src={HamburgerLogo.src}
-        alt="Hamburger Logo"
-        aria-label="Open Menu"
-      />
+      <button
+        id="hamburger-btn"
+        class="p-2 bg-[#52cf78b6] rounded-md cursor-pointer hover:bg-[#76ca50] transition-all duration-200 hover:scale-105"
+        aria-label="Abrir menú"
+      >
+        <img class="w-6" src={HamburgerLogo.src} alt="Menú" />
+      </button>
     </div>
   </nav>
 </header>
+
+<!-- Mobile Menu Component -->
+<MobileMenu />
 
 <style>
   /*
@@ -46,4 +51,13 @@ import LanguageSwitcher from "./ui/LanguageSwitcher.astro";
   */
 </style>
 
-<script></script>
+<script>
+  const hamburgerBtn = document.getElementById("hamburger-btn");
+
+  hamburgerBtn?.addEventListener("click", () => {
+    // Llamar a la función global del MobileMenu
+    if ((window as any).openMobileMenu) {
+      (window as any).openMobileMenu();
+    }
+  });
+</script>
