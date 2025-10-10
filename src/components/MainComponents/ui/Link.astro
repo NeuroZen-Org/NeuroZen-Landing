@@ -6,11 +6,13 @@ interface Props {
 }
 
 const { styles, text, href } = Astro.props;
+
+const anchorTarget = href === "#" ? "" : "_blank";
 ---
 
 <a
   href={href}
-  target="_blank"
+  target={anchorTarget}
   class=`rounded-lg bg-gradient-to-r from-green-500 to-emerald-600
       text-white font-semibold hover:from-green-60 hover:to-emerald-700 transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105 cursor-pointer ${styles}`
 >
