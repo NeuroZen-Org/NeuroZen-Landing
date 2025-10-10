@@ -10,5 +10,6 @@
   --color-accent-color: #8ad0b3;
   --color-black: #000;
   --color-white: #fff;
+  --breakpoint-md: 57.375rem;
   --font-open-sans: "Open Sans", sans-serif;
 }
