@@ -2,29 +2,74 @@
 import SpainFlag from "@/assets/images/Flags/spain_flag.png";
 ---
 
-<div class="p-1">
+<div
+  id="language-switcher"
+  class="relative w-12 h-8 bg-white/10 backdrop-blur-sm rounded-full p-1 cursor-pointer hover:bg-white/20 transition-all duration-300 border border-white/30 shadow-lg"
+  role="button"
+  aria-label="Cambiar idioma"
+  tabindex="0"
+>
   <img
-    id="language-switcher"
+    id="flag-image"
     src={SpainFlag.src}
     alt="Spain Flag"
-    class="w-10 h-[26px] cursor-pointer"
+    class="w-full h-full object-cover rounded-full transition-all duration-300"
   />
+  <div
+    class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-200"
+  >
+    <span class="current-language text-white text-xs font-bold drop-shadow-md"
+      >ES</span
+    >
+  </div>
 </div>
+
 <script>
   import SpainFlag from "@/assets/images/Flags/spain_flag.png";
   import UkFlag from "@/assets/images/Flags/uk_flag.png";
 
-  const languageSwitcher = document.getElementById(
-    "language-switcher"
-  ) as HTMLImageElement;
+  const languageSwitcher = document.getElementById("language-switcher");
+  const flagImage = document.getElementById("flag-image") as HTMLImageElement;
+  const currentLanguageSpan = document.querySelector(
+    ".current-language"
+  ) as HTMLSpanElement;
 
-  languageSwitcher?.addEventListener("click", () => {
-    if (languageSwitcher.alt.includes("Spain")) {
-      languageSwitcher.src = UkFlag.src;
-      languageSwitcher.alt = "UK Flag";
-    } else {
-      languageSwitcher.src = SpainFlag.src;
-      languageSwitcher.alt = "Spain Flag";
+  let currentLanguage = "es";
+
+  const updateLanguage = () => {
+    if (!flagImage) return;
+
+    // Añadir animación de fade
+    flagImage.style.opacity = "0";
+
+    setTimeout(() => {
+      if (currentLanguage === "es") {
+        flagImage.src = UkFlag.src;
+        flagImage.alt = "UK Flag";
+        currentLanguage = "en";
+      } else {
+        flagImage.src = SpainFlag.src;
+        flagImage.alt = "Spain Flag";
+        currentLanguage = "es";
+      }
+      currentLanguageSpan.textContent = currentLanguage.toUpperCase();
+      flagImage.style.opacity = "1";
+    }, 150);
+  };
+
+  languageSwitcher?.addEventListener("click", updateLanguage);
+
+  // Soporte para teclado (accesibilidad)
+  languageSwitcher?.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      updateLanguage();
     }
   });
 </script>
+
+<style>
+  #flag-image {
+    transition: opacity 0.15s ease-in-out;
+  }
+</style>
