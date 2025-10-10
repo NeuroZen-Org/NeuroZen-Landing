@@ -3,6 +3,7 @@
 
 @theme {
   --color-*: initial;
+  --color-button-bg-color: #7fe550;
   --color-green-gradient-start: #90ea66;
   --color-green-gradient-end: #4ba25e;
   --color-main-text-color: #29442a;
