@@ -23,22 +23,20 @@ import menuItems from "@/consts/menu-item";
     </div>
 
     <div class="flex gap-4 items-center">
-      <div>
-        <ul class="hidden md:flex p-1 gap-2">
-          {
-            menuItems.map((item) => (
-              <li>
-                <a
-                  href={item.href}
-                  class="menu-item block px-4 py-3 text-white text-lg hover:bg-white/10 rounded-lg transition-all duration-200 hover:-translate-y-2"
-                >
-                  {item.name}
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
+      <ul class="hidden md:flex p-1 gap-2">
+        {
+          menuItems.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class="menu-item block px-4 py-3 text-white text-lg hover:bg-white/10 rounded-lg transition-all duration-200 hover:-translate-y-2"
+              >
+                {item.name}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
       <LanguageSwitcher />
       <button
         id="hamburger-btn"
