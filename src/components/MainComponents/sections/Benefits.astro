@@ -4,27 +4,48 @@ import Section from "../components/Section.astro";
 import Benefit from "../components/Benefit.astro";
 ---
 
-<Section id="beneficios" title="Beneficios que ofrecemos">
-  <div class="flex flex-col gap-5 items-center md:flex-row px-12">
-    <img class="object-contain" src={BeneficiosGif.src} alt="Mujer meditando" />
-    <ul class="flex flex-col gap-4 text-start">
-      <Benefit benefitNumber="1" title="Recomendaciones">
-        <p>
-          Mejora tu bienestar con recomendaciones adaptadas a tu nivel de
-          estrés.
+<Section
+  id="beneficios"
+  title="Beneficios que ofrecemos"
+  description="Descubre cómo NeuroZen puede transformar tu bienestar laboral con herramientas diseñadas para ti"
+>
+  <div
+    class="flex flex-col gap-10 items-center justify-center px-6 md:px-12 lg:flex-row max-w-7xl mx-auto"
+  >
+    <!-- Imagen con efecto -->
+    <div class="lg:w-1/2 flex justify-center">
+      <div class="relative group">
+        <div
+          class="absolute -inset-1 bg-gradient-to-r from-green-400 to-emerald-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-300"
+        >
+        </div>
+        <img
+          class="relative object-contain rounded-2xl shadow-2xl max-w-full h-auto"
+          src={BeneficiosGif.src}
+          alt="Mujer meditando"
+        />
+      </div>
+    </div>
+
+    <!-- Lista de beneficios -->
+    <ul class="flex flex-col gap-6 text-start lg:w-1/2">
+      <Benefit benefitNumber="1" title="Recomendaciones Personalizadas">
+        <p class="text-gray-700 leading-relaxed">
+          Mejora tu bienestar con recomendaciones inteligentes adaptadas a tu
+          nivel de estrés y necesidades específicas.
         </p>
       </Benefit>
-      <Benefit benefitNumber="2" title="Agenda">
-        <p>
-          Agenda citas fácilmente con profesionales certificados para tener un
-          mejor asesoramiento.
+      <Benefit benefitNumber="2" title="Agenda con Profesionales">
+        <p class="text-gray-700 leading-relaxed">
+          Conecta fácilmente con profesionales certificados. Agenda citas en
+          minutos y recibe asesoramiento personalizado cuando lo necesites.
         </p>
       </Benefit>
-      <Benefit benefitNumber="3" title="Bienestar">
-        <p>
-          Prioriza tu bienestar con herramientas accesibles y efectivas.
-          Descubre ejercicios prácticos de meditación y respiración. Monitorea
-          tu bienestar y observa mejoras en tiempo real.
+      <Benefit benefitNumber="3" title="Herramientas de Bienestar">
+        <p class="text-gray-700 leading-relaxed">
+          Prioriza tu salud mental con herramientas accesibles y efectivas.
+          Practica meditación, ejercicios de respiración y monitorea tu progreso
+          en tiempo real.
         </p>
       </Benefit>
     </ul>
