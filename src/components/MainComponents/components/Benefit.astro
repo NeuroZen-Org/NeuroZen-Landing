@@ -1,0 +1,26 @@
+---
+interface Props {
+  benefitNumber: string;
+  title: string;
+}
+
+const { benefitNumber, title } = Astro.props;
+---
+
+<li class="flex flex-col gap-2">
+  <h3 class="font-bold">
+    <span
+      class="number text-white inline-block leading-[1.875rem] rounded-[50%] mr-1.5 w-7 h-7 text-center"
+    >
+      {benefitNumber}
+    </span>
+    <span>{title}</span>
+  </h3>
+  <slot />
+</li>
+
+<style>
+  .number {
+    background-image: linear-gradient(to top, #44b44d 0%, #c2fbce 100%);
+  }
+</style>
