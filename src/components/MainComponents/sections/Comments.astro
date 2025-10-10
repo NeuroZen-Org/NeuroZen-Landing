@@ -1,40 +1,260 @@
 ---
 import Section from "../components/Section.astro";
-import TestGif from "@/assets/Gifs/test.gif";
-import LiberacionGif from "@/assets/Gifs/liberacion.gif";
-import ContactoProfesionalImage from "@/assets/images/Principales/contacto.jpg";
+import Comment from "../components/Comment.astro";
+import { comments } from "@/consts/comments";
 ---
 
-<Section>
-  <h2>Somos expertos en:</h2>
-  <div class="flex flex-col gap-5">
-    <div>
-      <img
-        src={TestGif.src}
-        alt="Ícono de persona con auriculares completando un test"
-      />
-      <span>Test de estrés</span>
+<Section
+  id="comentarios"
+  title="Lo que dicen nuestros usuarios"
+  description="Historias reales de personas que han mejorado su bienestar con NeuroZen"
+>
+  <div class="carousel-container relative max-w-7xl mx-auto px-4 w-full">
+    <!-- Carrusel -->
+    <div class="carousel-wrapper overflow-hidden">
+      <div
+        id="carousel"
+        class="carousel-track flex gap-6 transition-transform duration-500 ease-in-out"
+      >
+        {
+          comments.map((comment) => (
+            <div class="carousel-item flex-shrink-0 w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]">
+              <Comment comment={comment} />
+            </div>
+          ))
+        }
+      </div>
     </div>
-    <div>
-      <img
-        src={LiberacionGif.src}
-        alt="Ilustración de persona meditando rodeada de objetos relajantes y monedas"
-      />
-      <span>Liberación de estrés</span>
-    </div>
-    <div>
-      <img
-        src={ContactoProfesionalImage.src}
-        alt="Ícono de asesora con auriculares brindando atención profesional"
-      />
-      <span>Contacto Profesional</span>
+
+    <!-- Controles de navegación -->
+    <div class="flex justify-center items-center gap-4 mt-8">
+      <button
+        id="prev-btn"
+        class="nav-btn bg-white hover:bg-green-50 text-green-600 rounded-full p-3 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed"
+        aria-label="Anterior"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-6 h-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 19l-7-7 7-7"></path>
+        </svg>
+      </button>
+
+      <!-- Indicadores -->
+      <div id="indicators" class="flex gap-2">
+        <!-- Los indicadores se generarán dinámicamente con JavaScript -->
+      </div>
+
+      <button
+        id="next-btn"
+        class="nav-btn bg-white hover:bg-green-50 text-green-600 rounded-full p-3 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed"
+        aria-label="Siguiente"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-6 h-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 5l7 7-7 7"></path>
+        </svg>
+      </button>
     </div>
   </div>
 </Section>
 
 <style>
-  img {
-    object-fit: contain;
-    width: 18.75rem;
+  .carousel-track {
+    scroll-behavior: smooth;
+  }
+
+  .indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #d1d5db;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .indicator:hover {
+    background-color: #9ca3af;
+    transform: scale(1.2);
+  }
+
+  .indicator.active {
+    background-color: #44b44d;
+    width: 32px;
+    border-radius: 6px;
   }
 </style>
+
+<script>
+  const carousel = document.getElementById("carousel");
+  const prevBtn = document.getElementById("prev-btn") as HTMLButtonElement;
+  const nextBtn = document.getElementById("next-btn") as HTMLButtonElement;
+  const indicatorsContainer = document.getElementById("indicators");
+
+  if (!carousel || !prevBtn || !nextBtn || !indicatorsContainer) {
+    throw new Error("Carousel elements not found");
+  }
+
+  let currentIndex = 0;
+  let itemsPerView = 1;
+  let totalItems = 0;
+  let totalPages = 0;
+
+  // Calcular items por vista según el ancho de pantalla
+  function calculateItemsPerView() {
+    const width = window.innerWidth;
+    if (width >= 1024) return 3; // lg
+    if (width >= 768) return 2; // md
+    return 1; // mobile
+  }
+
+  // Inicializar el carrusel
+  function initCarousel() {
+    if (!carousel || !indicatorsContainer) return;
+
+    const items = carousel.querySelectorAll(".carousel-item");
+    totalItems = items.length;
+    itemsPerView = calculateItemsPerView();
+    totalPages = Math.ceil(totalItems / itemsPerView);
+
+    // Crear indicadores
+    indicatorsContainer.innerHTML = "";
+    for (let i = 0; i < totalPages; i++) {
+      const indicator = document.createElement("div");
+      indicator.classList.add("indicator");
+      if (i === 0) indicator.classList.add("active");
+      indicator.addEventListener("click", () => goToPage(i));
+      indicatorsContainer.appendChild(indicator);
+    }
+
+    updateCarousel();
+  }
+
+  // Actualizar posición del carrusel
+  function updateCarousel() {
+    if (!carousel || !indicatorsContainer || !prevBtn || !nextBtn) return;
+
+    const items = carousel.querySelectorAll(".carousel-item");
+    if (items.length === 0) return;
+
+    const itemWidth = (items[0] as HTMLElement).offsetWidth;
+    const gap = 24; // 6 * 4px (gap-6 de Tailwind)
+    const offset = -(currentIndex * itemsPerView * (itemWidth + gap));
+
+    carousel.style.transform = `translateX(${offset}px)`;
+
+    // Actualizar indicadores
+    const indicators = indicatorsContainer.querySelectorAll(".indicator");
+    indicators.forEach((indicator, index) => {
+      indicator.classList.toggle("active", index === currentIndex);
+    });
+
+    // Actualizar estado de los botones
+    prevBtn.disabled = currentIndex === 0;
+    nextBtn.disabled = currentIndex >= totalPages - 1;
+  }
+
+  // Navegar a una página específica
+  function goToPage(pageIndex: number) {
+    currentIndex = Math.max(0, Math.min(pageIndex, totalPages - 1));
+    updateCarousel();
+  }
+
+  // Navegación
+  prevBtn?.addEventListener("click", () => {
+    if (currentIndex > 0) {
+      currentIndex--;
+      updateCarousel();
+    }
+  });
+
+  nextBtn?.addEventListener("click", () => {
+    if (currentIndex < totalPages - 1) {
+      currentIndex++;
+      updateCarousel();
+    }
+  });
+
+  // Auto-play (opcional)
+  let autoplayInterval: ReturnType<typeof setInterval>;
+
+  function startAutoplay() {
+    autoplayInterval = setInterval(() => {
+      if (currentIndex < totalPages - 1) {
+        currentIndex++;
+      } else {
+        currentIndex = 0;
+      }
+      updateCarousel();
+    }, 5000); // Cambiar cada 5 segundos
+  }
+
+  function stopAutoplay() {
+    clearInterval(autoplayInterval);
+  }
+
+  // Pausar autoplay al interactuar
+  carousel?.addEventListener("mouseenter", stopAutoplay);
+  carousel?.addEventListener("mouseleave", startAutoplay);
+  prevBtn?.addEventListener("click", stopAutoplay);
+  nextBtn?.addEventListener("click", stopAutoplay);
+
+  // Soporte para gestos táctiles
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  carousel?.addEventListener("touchstart", (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  });
+
+  carousel?.addEventListener("touchend", (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  });
+
+  function handleSwipe() {
+    const swipeThreshold = 50;
+    const diff = touchStartX - touchEndX;
+
+    if (Math.abs(diff) > swipeThreshold) {
+      if (diff > 0 && currentIndex < totalPages - 1) {
+        currentIndex++;
+      } else if (diff < 0 && currentIndex > 0) {
+        currentIndex--;
+      }
+      updateCarousel();
+      stopAutoplay();
+    }
+  }
+
+  // Reinicializar al cambiar el tamaño de la ventana
+  let resizeTimeout: ReturnType<typeof setTimeout>;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      currentIndex = 0;
+      initCarousel();
+    }, 250);
+  });
+
+  // Inicializar
+  initCarousel();
+  startAutoplay();
+</script>
