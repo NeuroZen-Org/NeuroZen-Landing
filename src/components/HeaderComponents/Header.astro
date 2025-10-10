@@ -4,6 +4,7 @@ import NeuroZenText from "@/assets/images/Principales/NeuroZen_texto.png";
 import HamburgerLogo from "@/assets/Icons/hamburguesa.svg";
 import LanguageSwitcher from "./ui/LanguageSwitcher.astro";
 import MobileMenu from "./ui/MobileMenu.astro";
+import menuItems from "@/consts/menu-item";
 ---
 
 <header class="flex w-full p-5 items-start bg-[#033612b6]">
@@ -22,10 +23,26 @@ import MobileMenu from "./ui/MobileMenu.astro";
     </div>
 
     <div class="flex gap-4 items-center">
+      <div>
+        <ul class="hidden md:flex p-1 gap-2">
+          {
+            menuItems.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  class="menu-item block px-4 py-3 text-white text-lg hover:bg-white/10 rounded-lg transition-all duration-200 hover:-translate-y-2"
+                >
+                  {item.name}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
       <LanguageSwitcher />
       <button
         id="hamburger-btn"
-        class="p-2 bg-[#52cf78b6] rounded-md cursor-pointer hover:bg-[#76ca50] transition-all duration-200 hover:scale-105"
+        class="p-2 bg-[#52cf78b6] rounded-md cursor-pointer hover:bg-[#76ca50] transition-all duration-200 hover:scale-105 md:hidden"
         aria-label="Abrir menú"
       >
         <img class="w-6" src={HamburgerLogo.src} alt="Menú" />
@@ -36,6 +53,28 @@ import MobileMenu from "./ui/MobileMenu.astro";
 
 <!-- Mobile Menu Component -->
 <MobileMenu />
+
+<style>
+  .menu-item {
+    position: relative;
+  }
+
+  .menu-item::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    transform: translateY(-50%);
+    width: 0;
+    height: 3px;
+    background: #76ca50;
+    transition: height 0.2s ease;
+  }
+
+  .menu-item:hover::before {
+    width: 100%;
+  }
+</style>
 
 <script>
   const hamburgerBtn = document.getElementById("hamburger-btn");
