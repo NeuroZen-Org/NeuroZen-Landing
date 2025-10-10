@@ -1,0 +1,30 @@
+---
+import SpainFlag from "@/assets/images/Flags/spain_flag.png";
+---
+
+<div class="p-1">
+  <img
+    id="language-switcher"
+    src={SpainFlag.src}
+    alt="Spain Flag"
+    class="w-10 cursor-pointer"
+  />
+</div>
+<script>
+  import SpainFlag from "@/assets/images/Flags/spain_flag.png";
+  import UkFlag from "@/assets/images/Flags/uk_flag.png";
+
+  const languageSwitcher = document.getElementById(
+    "language-switcher"
+  ) as HTMLImageElement;
+
+  languageSwitcher?.addEventListener("click", () => {
+    if (languageSwitcher.alt.includes("Spain")) {
+      languageSwitcher.src = UkFlag.src;
+      languageSwitcher.alt = "UK Flag";
+    } else {
+      languageSwitcher.src = SpainFlag.src;
+      languageSwitcher.alt = "Spain Flag";
+    }
+  });
+</script>
