@@ -4,22 +4,107 @@ import { formatPsychologistName } from "@/helpers/formatPsychologistName";
 
 interface Props {
   psychologist: Psychologist;
+  index?: number;
 }
 
-const { psychologist } = Astro.props;
+const { psychologist, index = 0 } = Astro.props;
 
 const psychologistName = formatPsychologistName(psychologist);
 const imageAlt = `Foto ${psychologistName}`;
+const isEven = index % 2 === 0;
 ---
 
-<div class="flex gap-5 items-center">
-  <img
-    class="rounded-full w-[160px] h-[80px] object-contain"
-    src={psychologist.img}
-    alt={imageAlt}
-  />
-  <div class="flex flex-col gap-2 text-start">
-    <h3 class="font-bold">{psychologistName}</h3>
-    <p>{psychologist.description}</p>
+<article
+  class={`psychologist-card group flex flex-col ${isEven ? "md:flex-row" : "md:flex-row-reverse"} gap-6 items-center bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] max-w-4xl mx-auto`}
+>
+  <!-- Imagen del psicólogo -->
+  <div class="relative flex-shrink-0">
+    <div
+      class="absolute -inset-1 bg-gradient-to-r from-green-400 to-emerald-600 rounded-full blur opacity-25 group-hover:opacity-40 transition duration-300"
+    >
+    </div>
+    <div class="relative">
+      <img
+        class="relative rounded-full w-32 h-32 md:w-40 md:h-40 object-cover border-4 border-white shadow-xl group-hover:scale-105 transition-transform duration-300"
+        src={psychologist.img}
+        alt={imageAlt}
+        loading="lazy"
+      />
+      <div
+        class="absolute bottom-0 right-0 bg-green-500 text-white rounded-full w-10 h-10 flex items-center justify-center shadow-lg border-2 border-black"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-5 h-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 13l4 4L19 7"></path>
+        </svg>
+      </div>
+    </div>
   </div>
-</div>
+
+  <!-- Información del psicólogo -->
+  <div class="flex flex-col gap-3 text-center md:text-start flex-1">
+    <div class="flex flex-col gap-1">
+      <h3
+        class="text-2xl font-bold text-gray-800 group-hover:text-green-700 transition-colors duration-300"
+      >
+        {psychologistName}
+      </h3>
+      <div
+        class="flex items-center justify-center md:justify-start gap-2 text-sm text-gray-500"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-4 h-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
+          ></path>
+        </svg>
+        <span>Profesional Certificado</span>
+      </div>
+    </div>
+
+    <p class="text-gray-600 leading-relaxed">
+      {psychologist.description}
+    </p>
+
+    <button
+      class="mt-2 px-6 py-2.5 bg-gradient-to-r from-green-500 to-emerald-600 text-black font-semibold rounded-lg hover:from-green-600 hover:to-emerald-700 transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105 self-center md:self-start cursor-pointer"
+    >
+      Agendar cita
+    </button>
+  </div>
+</article>
+
+<style>
+  .psychologist-card {
+    animation: fadeInUp 0.6s ease-out forwards;
+    opacity: 0;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
