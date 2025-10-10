@@ -44,7 +44,10 @@ const galleryImages = [
   >
     {
       galleryImages.map((image, index) => (
-        <div class="gallery-item group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300">
+        <div
+          class="gallery-item group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer"
+          data-index={index}
+        >
           <img
             src={image.src}
             class="gallery-image w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500"
@@ -56,7 +59,7 @@ const galleryImages = [
               {image.alt}
             </p>
           </div>
-          <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full w-8 h-8 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer">
+          <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full w-8 h-8 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="w-5 h-5 text-green-600"
@@ -75,6 +78,92 @@ const galleryImages = [
         </div>
       ))
     }
+  </div>
+
+  <!-- Lightbox Modal -->
+  <div
+    id="lightbox"
+    class="fixed inset-0 bg-black/95 z-50 hidden items-center justify-center p-4"
+  >
+    <!-- Close Button -->
+    <button
+      id="lightbox-close"
+      class="absolute top-4 right-4 z-50 text-white hover:text-green-400 transition-colors duration-200 bg-black/50 backdrop-blur-sm rounded-full p-3 hover:scale-110"
+      aria-label="Cerrar lightbox"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-8 h-8"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+
+    <!-- Previous Button -->
+    <button
+      id="lightbox-prev"
+      class="absolute left-4 top-1/2 -translate-y-1/2 z-50 text-white hover:text-green-400 transition-all duration-200 bg-black/50 backdrop-blur-sm rounded-full p-3 hover:scale-110"
+      aria-label="Imagen anterior"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-8 h-8"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M15 19l-7-7 7-7"></path>
+      </svg>
+    </button>
+
+    <!-- Next Button -->
+    <button
+      id="lightbox-next"
+      class="absolute right-4 top-1/2 -translate-y-1/2 z-50 text-white hover:text-green-400 transition-all duration-200 bg-black/50 backdrop-blur-sm rounded-full p-3 hover:scale-110"
+      aria-label="Siguiente imagen"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-8 h-8"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 5l7 7-7 7"></path>
+      </svg>
+    </button>
+
+    <!-- Image Container -->
+    <div
+      class="relative max-w-7xl max-h-[90vh] flex flex-col items-center justify-center"
+    >
+      <img
+        id="lightbox-image"
+        src=""
+        alt=""
+        class="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl"
+      />
+      <div class="mt-4 text-center">
+        <p id="lightbox-caption" class="text-white text-lg font-medium mb-2">
+        </p>
+        <p id="lightbox-counter" class="text-green-300 text-sm"></p>
+      </div>
+    </div>
   </div>
 </Section>
 
@@ -115,6 +204,40 @@ const galleryImages = [
     opacity: 1;
   }
 
+  /* Lightbox styles */
+  #lightbox {
+    backdrop-filter: blur(10px);
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  #lightbox.show {
+    display: flex !important;
+  }
+
+  #lightbox-image {
+    animation: zoomIn 0.3s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes zoomIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
   @media (max-width: 640px) {
     .gallery-image {
       height: 200px;
@@ -123,13 +246,123 @@ const galleryImages = [
 </style>
 
 <script>
-  // Opcional: Implementar lightbox al hacer clic en las imágenes
   const galleryItems = document.querySelectorAll(".gallery-item");
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImage = document.getElementById(
+    "lightbox-image"
+  ) as HTMLImageElement;
+  const lightboxCaption = document.getElementById("lightbox-caption");
+  const lightboxCounter = document.getElementById("lightbox-counter");
+  const closeBtn = document.getElementById("lightbox-close");
+  const prevBtn = document.getElementById("lightbox-prev");
+  const nextBtn = document.getElementById("lightbox-next");
 
-  galleryItems.forEach((item) => {
-    item.addEventListener("click", () => {
-      // Aquí puedes añadir funcionalidad de lightbox si lo deseas
-      console.log("Imagen clickeada");
-    });
+  let currentIndex = 0;
+  const totalImages = galleryItems.length;
+
+  // Función para abrir el lightbox
+  function openLightbox(index: number) {
+    if (!lightbox || !lightboxImage || !lightboxCaption || !lightboxCounter)
+      return;
+
+    currentIndex = index;
+
+    // Obtener la imagen real desde el DOM
+    const galleryImage = galleryItems[currentIndex].querySelector(
+      "img"
+    ) as HTMLImageElement;
+
+    lightboxImage.src = galleryImage.src;
+    lightboxImage.alt = galleryImage.alt;
+    lightboxCaption.textContent = galleryImage.alt;
+    lightboxCounter.textContent = `${currentIndex + 1} / ${totalImages}`;
+
+    lightbox.classList.add("show");
+    document.body.style.overflow = "hidden";
+  }
+
+  // Función para cerrar el lightbox
+  function closeLightbox() {
+    if (!lightbox) return;
+    lightbox.classList.remove("show");
+    document.body.style.overflow = "";
+  }
+
+  // Función para mostrar imagen anterior
+  function showPrevImage() {
+    currentIndex = currentIndex > 0 ? currentIndex - 1 : totalImages - 1;
+    openLightbox(currentIndex);
+  }
+
+  // Función para mostrar siguiente imagen
+  function showNextImage() {
+    currentIndex = currentIndex < totalImages - 1 ? currentIndex + 1 : 0;
+    openLightbox(currentIndex);
+  }
+
+  // Event listeners para los items de la galería
+  galleryItems.forEach((item, index) => {
+    item.addEventListener("click", () => openLightbox(index));
   });
+
+  // Event listeners para los controles
+  closeBtn?.addEventListener("click", closeLightbox);
+  prevBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    showPrevImage();
+  });
+  nextBtn?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    showNextImage();
+  });
+
+  // Cerrar al hacer click en el fondo
+  lightbox?.addEventListener("click", (e) => {
+    if (e.target === lightbox) {
+      closeLightbox();
+    }
+  });
+
+  // Soporte de teclado
+  document.addEventListener("keydown", (e) => {
+    if (!lightbox?.classList.contains("show")) return;
+
+    switch (e.key) {
+      case "Escape":
+        closeLightbox();
+        break;
+      case "ArrowLeft":
+        showPrevImage();
+        break;
+      case "ArrowRight":
+        showNextImage();
+        break;
+    }
+  });
+
+  // Soporte para gestos táctiles en el lightbox
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  lightboxImage?.addEventListener("touchstart", (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  });
+
+  lightboxImage?.addEventListener("touchend", (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  });
+
+  function handleSwipe() {
+    const swipeThreshold = 50;
+    const diff = touchStartX - touchEndX;
+
+    if (Math.abs(diff) > swipeThreshold) {
+      if (diff > 0) {
+        showNextImage();
+      } else {
+        showPrevImage();
+      }
+    }
+  }
 </script>
