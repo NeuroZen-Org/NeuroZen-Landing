@@ -1,0 +1,61 @@
+---
+import PriceCard from "../components/PriceCard.astro";
+import Section from "../components/Section.astro";
+
+const basicFeatures = [
+  "Health questionnaire & stress test",
+  "Weekly stress assessment",
+  "Basic stress dashboard",
+  "Manual symptom tracking",
+  "Limited access to articles & videos",
+  "Basic ergonomics reminders",
+];
+
+const advancedFeatures = [
+  "Everything in Basic",
+  "Biometric stress analysis",
+  "Personalized recommendations",
+  "Guided breathing & exercises",
+  "Active breaks & smart reminders",
+  "Downloadable progress reports",
+  "Full access to all resources",
+  "Chat support",
+];
+
+const professionalFeatures = [
+  "Everything in Advanced",
+  "Access to certified psychologists",
+  "Online therapy sessions",
+  "Support groups & wellness challenges",
+  "Workload & stress analytics",
+  "Corporate dashboard & reports",
+  "Priority support",
+];
+---
+
+<Section
+  title="Elige un plan"
+  description="Tu bienestar mental merece opciones flexibles. Elige el plan que mejor se acomode a tus necesidades y empieza a crear un balance entre el trabajo y tu salud."
+>
+  <div class="flex flex-col gap-8">
+    <PriceCard
+      name="Básico"
+      price="Gratis"
+      subtitle="Empieza tu travesía sin compromiso."
+      features={basicFeatures}
+    />
+    <PriceCard
+      name="Avanzado"
+      price="S/19.90"
+      subtitle="Asesoramiento diario para un bienestar duradero."
+      features={advancedFeatures}
+      isAdvanced
+    />
+    <PriceCard
+      name="Professional (Zen+)"
+      price="S/59.90"
+      subtitle="Asistencia completa con asesoramiento experto."
+      features={professionalFeatures}
+    />
+  </div>
+</Section>
