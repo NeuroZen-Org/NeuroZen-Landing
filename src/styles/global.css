@@ -2,9 +2,12 @@
 @import "tailwindcss";
 
 @theme {
+  --color-*: initial;
   --color-green-gradient-start: #90ea66;
   --color-green-gradient-end: #4ba25e;
   --color-main-text-color: #29442a;
   --color-accent-color: #8ad0b3;
+  --color-black: #000;
+  --color-white: #fff;
   --font-open-sans: "Open Sans", sans-serif;
 }
