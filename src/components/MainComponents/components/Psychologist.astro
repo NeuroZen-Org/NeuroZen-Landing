@@ -1,6 +1,7 @@
 ---
 import type { Psychologist } from "@/types/Psychologist";
 import { formatPsychologistName } from "@/helpers/formatPsychologistName";
+import Link from "../ui/Link.astro";
 
 interface Props {
   psychologist: Psychologist;
@@ -82,12 +83,11 @@ const isEven = index % 2 === 0;
     <p class="text-gray-600 leading-relaxed">
       {psychologist.description}
     </p>
-
-    <button
-      class="mt-2 px-6 py-2.5 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold rounded-lg hover:from-green-600 hover:to-emerald-700 transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105 self-center md:self-start cursor-pointer"
-    >
-      Agendar cita
-    </button>
+    <Link
+      href="#"
+      text="Agendar cita"
+      styles="mt-2 px-6 py-2.5 self-center md:self-start"
+    />
   </div>
 </article>
 
