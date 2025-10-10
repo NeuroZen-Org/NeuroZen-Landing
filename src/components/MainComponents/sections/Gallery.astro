@@ -1,0 +1,58 @@
+---
+import Section from "../components/Section.astro";
+import ImagenGaleria1 from "@/assets/images/Galeria/uno.jpg";
+import ImagenGaleria2 from "@/assets/images/Galeria/dos.jpg";
+import ImagenGaleria3 from "@/assets/images/Galeria/tres.jpg";
+import ImagenGaleria4 from "@/assets/images/Galeria/cuatro.jpg";
+import ImagenGaleria5 from "@/assets/images/Galeria/cinco.jpg";
+import ImagenGaleria6 from "@/assets/images/Galeria/seis.jpg";
+---
+
+<Section title="Ejercicios contra el estrés" hasGreenBg styles="gap-8 p-10">
+  <div class="contenedor-galeria grid grid-cols-2 gap-6">
+    <img
+      src={ImagenGaleria1.src}
+      class="img-galeria"
+      alt="Mujer meditando en un campo al atardecer"
+    />
+    <img
+      src={ImagenGaleria2.src}
+      class="img-galeria"
+      alt="Pareja corriendo por un sendero al sol de la mañana"
+    />
+    <img
+      src={ImagenGaleria3.src}
+      class="img-galeria"
+      alt="Grupo de personas haciendo ejercicios al aire libre"
+    />
+    <img
+      src={ImagenGaleria4.src}
+      class="img-galeria"
+      alt="Hombre relajándose escuchando música con auriculares"
+    />
+    <img
+      src={ImagenGaleria5.src}
+      class="img-galeria"
+      alt="Persona leyendo un libro cómodamente sentada"
+    />
+    <img
+      src={ImagenGaleria6.src}
+      class="img-galeria"
+      alt="Grupo de personas tomadas de la mano en un parque con luz natural"
+    />
+  </div>
+</Section>
+
+<style>
+  .img-galeria {
+    width: 300px;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 15px;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+  }
+</style>
+
+<script></script>
