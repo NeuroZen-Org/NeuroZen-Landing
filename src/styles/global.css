@@ -1,0 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --color-green-gradient-start: #90ea66;
+  --color-green-gradient-end: #4ba25e;
+  --color-main-text-color: #29442a;
+  --color-accent-color: #8ad0b3;
+  --font-open-sans: "Open Sans", sans-serif;
+}
