@@ -6,58 +6,130 @@ import ImagenGaleria3 from "@/assets/images/Galeria/tres.jpg";
 import ImagenGaleria4 from "@/assets/images/Galeria/cuatro.jpg";
 import ImagenGaleria5 from "@/assets/images/Galeria/cinco.jpg";
 import ImagenGaleria6 from "@/assets/images/Galeria/seis.jpg";
+
+const galleryImages = [
+  { src: ImagenGaleria1.src, alt: "Mujer meditando en un campo al atardecer" },
+  {
+    src: ImagenGaleria2.src,
+    alt: "Pareja corriendo por un sendero al sol de la mañana",
+  },
+  {
+    src: ImagenGaleria3.src,
+    alt: "Grupo de personas haciendo ejercicios al aire libre",
+  },
+  {
+    src: ImagenGaleria4.src,
+    alt: "Hombre relajándose escuchando música con auriculares",
+  },
+  {
+    src: ImagenGaleria5.src,
+    alt: "Persona leyendo un libro cómodamente sentada",
+  },
+  {
+    src: ImagenGaleria6.src,
+    alt: "Grupo de personas tomadas de la mano en un parque con luz natural",
+  },
+];
 ---
 
 <Section
   id="ejercicios"
   title="Ejercicios contra el estrés"
+  description="Descubre actividades que te ayudarán a reducir el estrés y mejorar tu bienestar"
   hasGreenBg
-  styles="gap-8 p-10 pt-5"
+  styles="p-15 pt-8"
 >
-  <div class="contenedor-galeria grid grid-cols-2 gap-6">
-    <img
-      src={ImagenGaleria1.src}
-      class="img-galeria"
-      alt="Mujer meditando en un campo al atardecer"
-    />
-    <img
-      src={ImagenGaleria2.src}
-      class="img-galeria"
-      alt="Pareja corriendo por un sendero al sol de la mañana"
-    />
-    <img
-      src={ImagenGaleria3.src}
-      class="img-galeria"
-      alt="Grupo de personas haciendo ejercicios al aire libre"
-    />
-    <img
-      src={ImagenGaleria4.src}
-      class="img-galeria"
-      alt="Hombre relajándose escuchando música con auriculares"
-    />
-    <img
-      src={ImagenGaleria5.src}
-      class="img-galeria"
-      alt="Persona leyendo un libro cómodamente sentada"
-    />
-    <img
-      src={ImagenGaleria6.src}
-      class="img-galeria"
-      alt="Grupo de personas tomadas de la mano en un parque con luz natural"
-    />
+  <div
+    class="gallery-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto px-4"
+  >
+    {
+      galleryImages.map((image, index) => (
+        <div class="gallery-item group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300">
+          <img
+            src={image.src}
+            class="gallery-image w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500"
+            alt={image.alt}
+            loading="lazy"
+          />
+          <div class="gallery-overlay absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4 text-start">
+            <p class="text-white text-sm font-medium transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+              {image.alt}
+            </p>
+          </div>
+          <div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-full w-8 h-8 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 text-green-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"
+              />
+            </svg>
+          </div>
+        </div>
+      ))
+    }
   </div>
 </Section>
 
 <style>
-  .img-galeria {
-    width: 300px;
-    height: 150px;
-    object-fit: cover;
-    display: block;
-    margin-bottom: 15px;
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
-    cursor: pointer;
+  .gallery-item {
+    position: relative;
+    background: linear-gradient(135deg, #e8fae6 0%, #d4f5d1 100%);
+  }
+
+  .gallery-image {
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .gallery-item:hover {
+    transform: translateY(-4px);
+  }
+
+  .gallery-item::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 1rem;
+    padding: 2px;
+    background: linear-gradient(135deg, #44b44d, #76ca50, #a5eebb);
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .gallery-item:hover::before {
+    opacity: 1;
+  }
+
+  @media (max-width: 640px) {
+    .gallery-image {
+      height: 200px;
+    }
   }
 </style>
 
-<script></script>
+<script>
+  // Opcional: Implementar lightbox al hacer clic en las imágenes
+  const galleryItems = document.querySelectorAll(".gallery-item");
+
+  galleryItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      // Aquí puedes añadir funcionalidad de lightbox si lo deseas
+      console.log("Imagen clickeada");
+    });
+  });
+</script>
