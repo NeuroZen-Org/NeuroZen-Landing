@@ -1,0 +1,40 @@
+---
+import Section from "../components/Section.astro";
+import TestGif from "@/assets/Gifs/test.gif";
+import LiberacionGif from "@/assets/Gifs/liberacion.gif";
+import ContactoProfesionalImage from "@/assets/images/Principales/contacto.jpg";
+---
+
+<Section>
+  <h2>Somos expertos en:</h2>
+  <div class="flex flex-col gap-5">
+    <div>
+      <img
+        src={TestGif.src}
+        alt="Ícono de persona con auriculares completando un test"
+      />
+      <span>Test de estrés</span>
+    </div>
+    <div>
+      <img
+        src={LiberacionGif.src}
+        alt="Ilustración de persona meditando rodeada de objetos relajantes y monedas"
+      />
+      <span>Liberación de estrés</span>
+    </div>
+    <div>
+      <img
+        src={ContactoProfesionalImage.src}
+        alt="Ícono de asesora con auriculares brindando atención profesional"
+      />
+      <span>Contacto Profesional</span>
+    </div>
+  </div>
+</Section>
+
+<style>
+  img {
+    object-fit: contain;
+    width: 18.75rem;
+  }
+</style>
