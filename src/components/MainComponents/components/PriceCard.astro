@@ -1,4 +1,6 @@
 ---
+import Link from "../ui/Link.astro";
+
 interface Props {
   name: string;
   subtitle: string;
@@ -23,9 +25,5 @@ const { features, name, price, subtitle, isAdvanced } = Astro.props;
   <ul class="text-left space-y-2 mb-8 text-gray-600">
     {features.map((feature) => <li>✔️ {feature}</li>)}
   </ul>
-  <button
-    class="mt-auto px-6 py-2.5 bg-gradient-to-r from-green-500 to-emerald-600 w-full text-white font-semibold rounded-lg hover:from-green-60 hover:to-emerald-700 transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105 cursor-pointer"
-  >
-    Get Started
-  </button>
+  <Link href="#" text="Get plan" styles="mt-auto px-6 py-2.5" />
 </div>
