@@ -7,20 +7,31 @@ interface Props {
 const { benefitNumber, title } = Astro.props;
 ---
 
-<li class="flex flex-col gap-2">
-  <h3 class="font-bold">
+<li
+  class="group flex flex-col gap-3 p-5 rounded-xl hover:bg-white/50 transition-all duration-300 hover:shadow-lg hover:scale-[1.02]"
+>
+  <h3 class="font-bold text-lg flex items-center gap-3">
     <span
-      class="number text-white inline-block leading-[1.875rem] rounded-[50%] mr-1.5 w-7 h-7 text-center"
+      class="number text-white inline-flex items-center justify-center rounded-full w-10 h-10 text-lg font-bold shadow-md group-hover:scale-110 transition-transform duration-300"
     >
       {benefitNumber}
     </span>
-    <span>{title}</span>
+    <span class="group-hover:text-green-700 transition-colors duration-300"
+      >{title}</span
+    >
   </h3>
-  <slot />
+  <div class="pl-[52px]">
+    <slot />
+  </div>
 </li>
 
 <style>
   .number {
-    background-image: linear-gradient(to top, #44b44d 0%, #c2fbce 100%);
+    background-image: linear-gradient(135deg, #44b44d 0%, #76ca50 100%);
+    box-shadow: 0 4px 15px rgba(68, 180, 77, 0.3);
+  }
+
+  .group:hover .number {
+    box-shadow: 0 6px 20px rgba(68, 180, 77, 0.5);
   }
 </style>
