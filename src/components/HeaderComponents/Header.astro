@@ -1,1 +1,38 @@
-<header></header>
+---
+import NeuroZenLogo from "@/assets/images/Principales/Logo.png";
+import HamburgerLogo from "@/assets/Icons/hamburguesa.svg";
+import LanguageSwitcher from "./ui/LanguageSwitcher.astro";
+---
+
+<header class="flex w-full h-72 p-5 items-start">
+  <nav class="flex w-full items-center justify-between">
+    <img
+      class="w-12 cursor-pointer"
+      src={NeuroZenLogo.src}
+      alt="NeuroZen Logo"
+    />
+    <div class="flex gap-4 items-center">
+      <LanguageSwitcher />
+      <img
+        class="w-8 bg-green-gradient-end rounded-md cursor-pointer"
+        src={HamburgerLogo.src}
+        alt="Hamburger Logo"
+        aria-label="Open Menu"
+      />
+    </div>
+  </nav>
+</header>
+
+<style>
+  header {
+    /* background-image: url("@/assets/images/Principales/header_bg.jpg"); */
+    /* height: 100vh; */
+    background-image: linear-gradient(to top, #8efda97c 0%, #a5eebbb6 100%),
+      url("../../assets/images/Principales/header_bg.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+</style>
+
+<script></script>
