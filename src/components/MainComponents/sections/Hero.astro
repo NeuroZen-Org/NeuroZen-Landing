@@ -3,29 +3,20 @@ import Section from "../components/Section.astro";
 ---
 
 <Section id="hero">
-  <div class="flex flex-col gap-1">
-    <h1 class="text-3xl -tracking-[-.5rem] uppercase font-bold">NeuroZen</h1>
+  <div class="flex flex-col gap-2">
+    <h1 class="text-4xl -tracking-[-.5rem] uppercase font-bold text-[#017e01]">
+      NeuroZen
+    </h1>
     <p>Transformando el bienestar laboral a través de la tecnología</p>
   </div>
-  <div class="flex flex-col gap-3 items-center">
+  <div class="flex flex-col gap-4 items-center">
     <p>Sé uno de los primeros en probar el servicio.</p>
     <a
       href="https://neurozen-frontend.web.app"
       target="_blank"
-      class="border max-w-max px-2 py-1 rounded bg-green-gradient-start hover:bg-green-gradient-start/80"
+      class="border max-w-max px-2 py-1 rounded-md bg-green-gradient-start hover:bg-green-gradient-start/80 transition-all duration-200"
     >
       Solicitar demo
     </a>
   </div>
 </Section>
-
-<style>
-  #hero {
-    background-image: linear-gradient(to top, #0da2327c 0%, #a5eebbb6 100%),
-      url("../../../assets/images/Principales/header_bg.jpg");
-    height: 50vh;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-  }
-</style>
