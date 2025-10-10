@@ -1,0 +1,23 @@
+---
+import Section from "../components/Section.astro";
+import Psychologist from "../components/Psychologist.astro";
+import { psychologists } from "@/consts/psychologists";
+---
+
+<Section>
+  <div class="flex flex-col max-w-6xl mx-auto px-6 text-center gap-4">
+    <h2>Nuestros mejores psicólogos</h2>
+    <p class="text-gray-600 max-w-2xl mx-auto mb-6">
+      Profesionales certificados listos para ayudarte a reducir el estrés,
+      mejorar tu bienestar emocional y recuperar tu equilibrio.
+    </p>
+  </div>
+
+  <div class="flex flex-col gap-9">
+    {
+      psychologists.map((psychologist) => (
+        <Psychologist psychologist={psychologist} />
+      ))
+    }
+  </div>
+</Section>
