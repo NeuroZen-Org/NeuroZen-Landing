@@ -1,0 +1,94 @@
+---
+import SpainFlag from "@/assets/images/Flags/spain_flag.png";
+import UkFlag from "@/assets/images/Flags/uk_flag.png";
+import { getLangFromUrl } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const isSpanish = lang === "es";
+---
+
+<div
+  id="language-switcher"
+  class="relative w-12 h-8 bg-white/10 backdrop-blur-sm rounded-full p-1 cursor-pointer hover:bg-white/20 transition-all duration-300 border border-white/30 shadow-lg"
+  role="button"
+  aria-label="Cambiar idioma"
+  tabindex="0"
+>
+  <img
+    id="flag-image"
+    src={isSpanish ? SpainFlag.src : UkFlag.src}
+    alt={isSpanish ? "Spain Flag" : "UK Flag"}
+    class="w-full h-full object-cover rounded-full transition-all duration-300"
+  />
+  <div
+    class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-200"
+  >
+    <span class="current-language text-white text-xs font-bold drop-shadow-md">
+      {isSpanish ? "ES" : "EN"}
+    </span>
+  </div>
+</div>
+
+<script>
+  import SpainFlag from "@/assets/images/Flags/spain_flag.png";
+  import UkFlag from "@/assets/images/Flags/uk_flag.png";
+
+  const languageSwitcher = document.getElementById("language-switcher");
+  const flagImage = document.getElementById("flag-image") as HTMLImageElement;
+
+  // Detectar idioma actual de la URL
+  const getLanguageFromPath = () => {
+    const path = window.location.pathname;
+    if (path.startsWith("/en/") || path === "/en") return "en";
+    return "es";
+  };
+
+  const updateLanguage = () => {
+    if (!flagImage) return;
+
+    // Añadir animación de fade
+    flagImage.style.opacity = "0";
+
+    setTimeout(() => {
+      const currentLanguage = getLanguageFromPath();
+      const currentPath = window.location.pathname;
+      const queryString = window.location.search; // Preservar parámetros de URL
+      let newPath = "";
+
+      if (currentLanguage === "es") {
+        // Cambiar a inglés
+        if (currentPath === "/" || currentPath === "") {
+          newPath = "/en";
+        } else {
+          newPath = "/en" + currentPath;
+        }
+      } else {
+        // Cambiar a español (quitar /en)
+        if (currentPath === "/en" || currentPath === "/en/") {
+          newPath = "/";
+        } else {
+          newPath = currentPath.replace("/en", "");
+        }
+      }
+
+      // Redirigir a la nueva ruta con parámetros preservados
+      window.location.href = newPath + queryString;
+    }, 150);
+  };
+
+  languageSwitcher?.addEventListener("click", updateLanguage);
+
+  // Soporte para teclado (accesibilidad)
+  languageSwitcher?.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      updateLanguage();
+    }
+  });
+</script>
+
+<style>
+  #flag-image {
+    transition: opacity 0.15s ease-in-out;
+  }
+</style>
