@@ -11,7 +11,9 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 ---
 
-<header class="flex w-full p-5 items-start bg-[#033612b6]">
+<header
+  class="fixed top-0 left-0 right-0 z-50 flex w-full min-h-[80px] p-5 items-center bg-[#033612]/90 backdrop-blur-md shadow-lg"
+>
   <nav class="flex w-full items-center justify-between">
     <div class="flex gap-3 text-2xl items-center text-white">
       <img
@@ -80,11 +82,23 @@ const t = useTranslations(lang);
 
 <script>
   const hamburgerBtn = document.getElementById("hamburger-btn");
+  const header = document.querySelector("header");
 
   hamburgerBtn?.addEventListener("click", () => {
     // Llamar a la función global del MobileMenu
     if ((window as any).openMobileMenu) {
       (window as any).openMobileMenu();
+    }
+  });
+
+  // Agregar sombra al header cuando se hace scroll
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 10) {
+      header?.classList.add("shadow-2xl");
+      header?.classList.remove("shadow-lg");
+    } else {
+      header?.classList.add("shadow-lg");
+      header?.classList.remove("shadow-2xl");
     }
   });
 </script>
