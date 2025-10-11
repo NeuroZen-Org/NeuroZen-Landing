@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import LanguageSwitcher from "@/components/HeaderComponents/ui/LanguageSwitcher.astro";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -11,6 +12,11 @@ const planPrice = url.searchParams.get("price") || "$0";
 ---
 
 <Layout title={`${t("purchase.title")} - NeuroZen`}>
+  <!-- Language Switcher -->
+  <div class="fixed top-6 right-6 z-50">
+    <LanguageSwitcher />
+  </div>
+
   <!-- Toast Notification -->
   <div
     id="toast"
@@ -239,10 +245,35 @@ const planPrice = url.searchParams.get("price") || "$0";
 </Layout>
 
 <script>
+  // Translation map for plan names
+  const planTranslations: Record<string, Record<string, string>> = {
+    es: {
+      Basic: "Básico",
+      Básico: "Básico",
+      Advanced: "Avanzado",
+      Avanzado: "Avanzado",
+      "Professional (Zen+)": "Professional (Zen+)",
+    },
+    en: {
+      Basic: "Basic",
+      Básico: "Basic",
+      Advanced: "Advanced",
+      Avanzado: "Advanced",
+      "Professional (Zen+)": "Professional (Zen+)",
+    },
+  };
+
   // Obtener parámetros de la URL desde el cliente
   const urlParams = new URLSearchParams(window.location.search);
-  const planName = urlParams.get("plan") || "Plan no especificado";
+  const planNameParam = urlParams.get("plan") || "Plan no especificado";
   const planPrice = urlParams.get("price") || "$0";
+
+  // Get current language from URL
+  const currentLang = window.location.pathname.startsWith("/en") ? "en" : "es";
+
+  // Translate plan name
+  const planName =
+    planTranslations[currentLang][planNameParam] || planNameParam;
 
   // Actualizar el DOM con los valores
   const planNameElement = document.getElementById("plan-name");
