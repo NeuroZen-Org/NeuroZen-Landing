@@ -3,12 +3,16 @@ import Section from "../components/Section.astro";
 import Psychologist from "../components/Psychologist.astro";
 import { psychologists } from "@/consts/psychologists";
 import Link from "../ui/Link.astro";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <Section
   id="psicologos"
-  title="Nuestros mejores psicólogos"
-  description="Profesionales certificados listos para ayudarte a reducir el estrés, mejorar tu bienestar emocional y recuperar tu equilibrio."
+  title={t("psychologists.section.title")}
+  description={t("psychologists.section.description")}
   hasGreenBg
   styles="pt-8 pb-15"
 >
@@ -25,12 +29,11 @@ import Link from "../ui/Link.astro";
     class="mt-8 text-center bg-white rounded-2xl p-8 shadow-lg max-w-2xl mx-auto"
   >
     <h3 class="text-2xl font-bold text-gray-800 mb-3">
-      ¿No sabes cuál psicólogo elegir?
+      {t("psychologists.cta.question")}
     </h3>
     <p class="text-gray-600 mb-6">
-      Nuestro sistema te ayudará a encontrar al profesional perfecto según tus
-      necesidades
+      {t("psychologists.cta.help")}
     </p>
-    <Link href="#" text="Encuentra tu psicólogo ideal" styles="px-8 py-3" />
+    <Link href="#" text={t("psychologists.cta.find")} styles="px-8 py-3" />
   </div>
 </Section>

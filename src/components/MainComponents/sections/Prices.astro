@@ -1,61 +1,61 @@
 ---
 import PriceCard from "../components/PriceCard.astro";
 import Section from "../components/Section.astro";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 const basicFeatures = [
-  "Health questionnaire & stress test",
-  "Weekly stress assessment",
-  "Basic stress dashboard",
-  "Manual symptom tracking",
-  "Limited access to articles & videos",
-  "Basic ergonomics reminders",
+  t("plans.feature.1"),
+  t("plans.feature.2"),
+  t("plans.feature.3"),
+  t("plans.feature.4"),
+  t("plans.feature.5"),
+  t("plans.feature.6"),
 ];
 
 const advancedFeatures = [
-  "Everything in Basic",
-  "Biometric stress analysis",
-  "Personalized recommendations",
-  "Guided breathing & exercises",
-  "Active breaks & smart reminders",
-  "Downloadable progress reports",
-  "Full access to all resources",
-  "Chat support",
+  t("plans.feature.7"),
+  t("plans.feature.8"),
+  t("plans.feature.9"),
+  t("plans.feature.10"),
+  t("plans.feature.11"),
+  t("plans.feature.12"),
+  t("plans.feature.13"),
+  t("plans.feature.14"),
 ];
 
 const professionalFeatures = [
-  "Everything in Advanced",
-  "Access to certified psychologists",
-  "Online therapy sessions",
-  "Support groups & wellness challenges",
-  "Workload & stress analytics",
-  "Corporate dashboard & reports",
-  "Priority support",
+  t("plans.feature.15"),
+  t("plans.feature.16"),
+  t("plans.feature.17"),
+  t("plans.feature.18"),
+  t("plans.feature.19"),
+  t("plans.feature.20"),
+  t("plans.feature.21"),
 ];
 ---
 
-<Section
-  id="planes"
-  title="Elige un plan"
-  description="Tu bienestar mental merece opciones flexibles. Elige el plan que mejor se acomode a tus necesidades y empieza a crear un balance entre el trabajo y tu salud."
->
+<Section id="planes" title={t("plans.title")} description={t("plans.subtitle")}>
   <div class="flex flex-col gap-8 md:flex-row">
     <PriceCard
-      name="Básico"
-      price="Gratis"
-      subtitle="Empieza tu travesía sin compromiso."
+      name={t("plans.basic.name")}
+      price={t("plans.basic.price")}
+      subtitle={t("plans.basic.subtitle")}
       features={basicFeatures}
     />
     <PriceCard
-      name="Avanzado"
-      price="S/19.90"
-      subtitle="Asesoramiento diario para un bienestar duradero."
+      name={t("plans.advanced.name")}
+      price={t("plans.advanced.price")}
+      subtitle={t("plans.advanced.subtitle")}
       features={advancedFeatures}
       isAdvanced
     />
     <PriceCard
-      name="Professional (Zen+)"
-      price="S/59.90"
-      subtitle="Asistencia completa con asesoramiento experto."
+      name={t("plans.professional.name")}
+      price={t("plans.professional.price")}
+      subtitle={t("plans.professional.subtitle")}
       features={professionalFeatures}
     />
   </div>

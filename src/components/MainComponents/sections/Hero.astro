@@ -1,6 +1,10 @@
 ---
 import Section from "../components/Section.astro";
 import Link from "../ui/Link.astro";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <Section id="hero">
@@ -8,23 +12,23 @@ import Link from "../ui/Link.astro";
     <h1
       class="text-5xl md:text-6xl uppercase font-bold drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]"
     >
-      NeuroZen
+      {t("hero.title")}
     </h1>
     <p
       class="text-lg md:text-xl font-medium drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
     >
-      Transformando el bienestar laboral a través de la tecnología
+      {t("hero.subtitle")}
     </p>
   </div>
   <div
     class="flex flex-col gap-4 items-center bg-black/40 backdrop-blur-sm p-6 rounded-xl border border-white/20"
   >
     <p class="text-white text-lg font-medium">
-      Sé uno de los primeros en probar el servicio
+      {t("hero.cta.text")}
     </p>
     <Link
       href="https://neurozen-frontend.web.app"
-      text="Solicitar demo"
+      text={t("hero.cta.button")}
       styles="border-2 border-white px-6 py-3"
     />
   </div>

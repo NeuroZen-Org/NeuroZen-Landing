@@ -2,12 +2,16 @@
 import BeneficiosGif from "@/assets/Gifs/comienzo.gif";
 import Section from "../components/Section.astro";
 import Benefit from "../components/Benefit.astro";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <Section
   id="beneficios"
-  title="Beneficios que ofrecemos"
-  description="Descubre cómo NeuroZen puede transformar tu bienestar laboral con herramientas diseñadas para ti"
+  title={t("benefits.title")}
+  description={t("benefits.description")}
 >
   <div
     class="flex flex-col gap-10 items-center justify-center px-6 md:px-12 lg:flex-row max-w-7xl mx-auto"
@@ -29,23 +33,19 @@ import Benefit from "../components/Benefit.astro";
 
     <!-- Lista de beneficios -->
     <ul class="flex flex-col gap-6 text-start lg:w-1/2">
-      <Benefit benefitNumber="1" title="Recomendaciones Personalizadas">
+      <Benefit benefitNumber="1" title={t("benefits.1.title")}>
         <p class="text-gray-700 leading-relaxed">
-          Mejora tu bienestar con recomendaciones inteligentes adaptadas a tu
-          nivel de estrés y necesidades específicas.
+          {t("benefits.1.description")}
         </p>
       </Benefit>
-      <Benefit benefitNumber="2" title="Agenda con Profesionales">
+      <Benefit benefitNumber="2" title={t("benefits.2.title")}>
         <p class="text-gray-700 leading-relaxed">
-          Conecta fácilmente con profesionales certificados. Agenda citas en
-          minutos y recibe asesoramiento personalizado cuando lo necesites.
+          {t("benefits.2.description")}
         </p>
       </Benefit>
-      <Benefit benefitNumber="3" title="Herramientas de Bienestar">
+      <Benefit benefitNumber="3" title={t("benefits.3.title")}>
         <p class="text-gray-700 leading-relaxed">
-          Prioriza tu salud mental con herramientas accesibles y efectivas.
-          Practica meditación, ejercicios de respiración y monitorea tu progreso
-          en tiempo real.
+          {t("benefits.3.description")}
         </p>
       </Benefit>
     </ul>

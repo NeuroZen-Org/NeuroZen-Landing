@@ -2,25 +2,29 @@
 import SocialNetworkLogo from "./components/SocialNetworkLogo.astro";
 import NeuroZenLogo from "@/assets/images/Principales/Logo.png";
 import NeuroZenLogoText from "@/assets/images/Principales/NeuroZen_Texto.png";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 const currentYear = new Date().getFullYear();
 
 const navigation = {
   platform: [
-    { name: "Beneficios", href: "#beneficios" },
-    { name: "Ejercicios", href: "#ejercicios" },
-    { name: "Psicólogos", href: "#psicologos" },
-    { name: "Planes", href: "#planes" },
+    { name: "nav.benefits", href: "#beneficios" },
+    { name: "nav.exercises", href: "#ejercicios" },
+    { name: "nav.psychologists", href: "#psicologos" },
+    { name: "nav.plans", href: "#planes" },
   ],
   company: [
-    { name: "Sobre Nosotros", href: "#" },
-    { name: "Contacto", href: "#contacto" },
-    { name: "Blog", href: "#" },
+    { name: "footer.about", href: "#" },
+    { name: "footer.contact", href: "#contacto" },
+    { name: "footer.blog", href: "#" },
   ],
   legal: [
-    { name: "Privacidad", href: "#" },
-    { name: "Términos", href: "#" },
-    { name: "Cookies", href: "#" },
+    { name: "footer.privacy", href: "#" },
+    { name: "footer.terms", href: "#" },
+    { name: "footer.cookies", href: "#" },
   ],
 };
 ---
@@ -40,8 +44,7 @@ const navigation = {
           />
         </div>
         <p class="text-green-100 mb-6 leading-relaxed">
-          Transformando el bienestar laboral a través de la tecnología. Expertos
-          en reducir el estrés y mejorar tu calidad de vida.
+          {t("footer.slogan")}
         </p>
         <!-- Social Media -->
         <div class="flex gap-3">
@@ -69,7 +72,9 @@ const navigation = {
 
       <!-- Platform Links -->
       <div>
-        <h3 class="text-lg font-semibold mb-4 text-green-100">Plataforma</h3>
+        <h3 class="text-lg font-semibold mb-4 text-green-100">
+          {t("footer.platform")}
+        </h3>
         <ul class="space-y-3">
           {
             navigation.platform.map((item) => (
@@ -78,7 +83,7 @@ const navigation = {
                   href={item.href}
                   class="text-green-200 hover:text-white transition-colors duration-200 hover:translate-x-1 inline-block"
                 >
-                  {item.name}
+                  {t(item.name as any)}
                 </a>
               </li>
             ))
@@ -88,7 +93,9 @@ const navigation = {
 
       <!-- Company Links -->
       <div>
-        <h3 class="text-lg font-semibold mb-4 text-green-100">Compañía</h3>
+        <h3 class="text-lg font-semibold mb-4 text-green-100">
+          {t("footer.company")}
+        </h3>
         <ul class="space-y-3">
           {
             navigation.company.map((item) => (
@@ -97,7 +104,7 @@ const navigation = {
                   href={item.href}
                   class="text-green-200 hover:text-white transition-colors duration-200 hover:translate-x-1 inline-block"
                 >
-                  {item.name}
+                  {t(item.name as any)}
                 </a>
               </li>
             ))
@@ -107,21 +114,23 @@ const navigation = {
 
       <!-- Newsletter -->
       <div>
-        <h3 class="text-lg font-semibold mb-4 text-green-100">Newsletter</h3>
+        <h3 class="text-lg font-semibold mb-4 text-green-100">
+          {t("footer.newsletter")}
+        </h3>
         <p class="text-green-200 mb-4 text-sm">
-          Recibe tips semanales para mejorar tu bienestar
+          {t("footer.newsletter.text")}
         </p>
         <form class="flex flex-col gap-3">
           <input
             type="email"
-            placeholder="Tu email"
+            placeholder={t("footer.newsletter.placeholder")}
             class="px-4 py-2.5 rounded-lg bg-white/10 border border-white/20 text-white placeholder-green-200 focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all duration-200"
           />
           <button
             type="submit"
             class="px-4 py-2.5 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-lg transition-all duration-200 hover:scale-105 shadow-lg"
           >
-            Suscribirse
+            {t("footer.newsletter.button")}
           </button>
         </form>
       </div>
@@ -134,7 +143,8 @@ const navigation = {
       <div class="flex flex-col md:flex-row justify-between items-center gap-4">
         <!-- Copyright -->
         <p class="text-green-200 text-sm text-center md:text-left">
-          © {currentYear} NeuroZen. Todos los derechos reservados.
+          © {currentYear}
+          {t("footer.copyright")}
         </p>
 
         <!-- Legal Links -->
@@ -145,7 +155,7 @@ const navigation = {
                 href={item.href}
                 class="text-green-200 hover:text-white transition-colors duration-200"
               >
-                {item.name}
+                {t(item.name as any)}
               </a>
             ))
           }

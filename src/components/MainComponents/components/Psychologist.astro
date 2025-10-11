@@ -2,6 +2,7 @@
 import type { Psychologist } from "@/types/Psychologist";
 import { formatPsychologistName } from "@/helpers/formatPsychologistName";
 import Link from "../ui/Link.astro";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 
 interface Props {
   psychologist: Psychologist;
@@ -9,6 +10,8 @@ interface Props {
 }
 
 const { psychologist, index = 0 } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 const psychologistName = formatPsychologistName(psychologist);
 const imageAlt = `Foto ${psychologistName}`;
@@ -76,7 +79,7 @@ const isEven = index % 2 === 0;
             d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
           ></path>
         </svg>
-        <span>Profesional Certificado</span>
+        <span>{t("psychologists.verified")}</span>
       </div>
     </div>
 
@@ -85,7 +88,7 @@ const isEven = index % 2 === 0;
     </p>
     <Link
       href="#"
-      text="Agendar cita"
+      text={t("psychologists.schedule")}
       styles="mt-2 px-6 py-2.5 self-center md:self-start"
     />
   </div>

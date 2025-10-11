@@ -1,6 +1,10 @@
 ---
 import CloseIcon from "@/assets/Icons/close.svg";
 import menuItems from "@/consts/menu-item";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <!-- Overlay -->
@@ -17,7 +21,7 @@ import menuItems from "@/consts/menu-item";
 >
   <!-- Header del menu -->
   <div class="flex items-center justify-between p-5 border-b border-white/20">
-    <h3 class="text-white text-xl font-bold">Menú</h3>
+    <h3 class="text-white text-xl font-bold">{t("nav.menu")}</h3>
     <button
       id="close-menu"
       class="p-2 hover:bg-white/10 rounded-lg transition-colors duration-200"
@@ -36,7 +40,7 @@ import menuItems from "@/consts/menu-item";
             href={item.href}
             class="menu-item block px-4 py-3 text-white text-lg hover:bg-white/10 rounded-lg transition-all duration-200 hover:translate-x-2"
           >
-            {item.name}
+            {t(item.name as any)}
           </a>
         </li>
       ))
@@ -50,7 +54,7 @@ import menuItems from "@/consts/menu-item";
       target="_blank"
       class="block w-full text-center px-4 py-3 bg-green-gradient-start hover:bg-[#76ca50] text-white font-semibold rounded-lg transition-all duration-200 hover:scale-105"
     >
-      Solicitar demo
+      {t("hero.cta.button")}
     </a>
   </div>
 </nav>

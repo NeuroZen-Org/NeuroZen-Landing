@@ -6,6 +6,10 @@ import ImagenGaleria3 from "@/assets/images/Galeria/tres.jpg";
 import ImagenGaleria4 from "@/assets/images/Galeria/cuatro.jpg";
 import ImagenGaleria5 from "@/assets/images/Galeria/cinco.jpg";
 import ImagenGaleria6 from "@/assets/images/Galeria/seis.jpg";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 const galleryImages = [
   { src: ImagenGaleria1.src, alt: "Mujer meditando en un campo al atardecer" },
@@ -34,8 +38,8 @@ const galleryImages = [
 
 <Section
   id="ejercicios"
-  title="Ejercicios contra el estrés"
-  description="Descubre actividades que te ayudarán a reducir el estrés y mejorar tu bienestar"
+  title={t("exercises.title")}
+  description={t("exercises.description")}
   hasGreenBg
   styles="p-15 pt-8"
 >

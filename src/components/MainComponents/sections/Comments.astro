@@ -2,12 +2,16 @@
 import Section from "../components/Section.astro";
 import Comment from "../components/Comment.astro";
 import { comments } from "@/consts/comments";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <Section
   id="comentarios"
-  title="Lo que dicen nuestros usuarios"
-  description="Historias reales de personas que han mejorado su bienestar con NeuroZen"
+  title={t("comments.title")}
+  description={t("comments.description")}
 >
   <div class="carousel-container relative max-w-7xl mx-auto px-4 w-full">
     <!-- Carrusel -->

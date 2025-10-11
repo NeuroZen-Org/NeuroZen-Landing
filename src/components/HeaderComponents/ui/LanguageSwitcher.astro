@@ -1,5 +1,10 @@
 ---
 import SpainFlag from "@/assets/images/Flags/spain_flag.png";
+import UkFlag from "@/assets/images/Flags/uk_flag.png";
+import { getLangFromUrl } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const isSpanish = lang === "es";
 ---
 
 <div
@@ -11,16 +16,16 @@ import SpainFlag from "@/assets/images/Flags/spain_flag.png";
 >
   <img
     id="flag-image"
-    src={SpainFlag.src}
-    alt="Spain Flag"
+    src={isSpanish ? SpainFlag.src : UkFlag.src}
+    alt={isSpanish ? "Spain Flag" : "UK Flag"}
     class="w-full h-full object-cover rounded-full transition-all duration-300"
   />
   <div
     class="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-200"
   >
-    <span class="current-language text-white text-xs font-bold drop-shadow-md"
-      >ES</span
-    >
+    <span class="current-language text-white text-xs font-bold drop-shadow-md">
+      {isSpanish ? "ES" : "EN"}
+    </span>
   </div>
 </div>
 
@@ -30,11 +35,13 @@ import SpainFlag from "@/assets/images/Flags/spain_flag.png";
 
   const languageSwitcher = document.getElementById("language-switcher");
   const flagImage = document.getElementById("flag-image") as HTMLImageElement;
-  const currentLanguageSpan = document.querySelector(
-    ".current-language"
-  ) as HTMLSpanElement;
 
-  let currentLanguage = "es";
+  // Detectar idioma actual de la URL
+  const getLanguageFromPath = () => {
+    const path = window.location.pathname;
+    if (path.startsWith("/en/") || path === "/en") return "en";
+    return "es";
+  };
 
   const updateLanguage = () => {
     if (!flagImage) return;
@@ -43,17 +50,28 @@ import SpainFlag from "@/assets/images/Flags/spain_flag.png";
     flagImage.style.opacity = "0";
 
     setTimeout(() => {
+      const currentLanguage = getLanguageFromPath();
+      const currentPath = window.location.pathname;
+      let newPath = "";
+
       if (currentLanguage === "es") {
-        flagImage.src = UkFlag.src;
-        flagImage.alt = "UK Flag";
-        currentLanguage = "en";
+        // Cambiar a inglés
+        if (currentPath === "/" || currentPath === "") {
+          newPath = "/en";
+        } else {
+          newPath = "/en" + currentPath;
+        }
       } else {
-        flagImage.src = SpainFlag.src;
-        flagImage.alt = "Spain Flag";
-        currentLanguage = "es";
+        // Cambiar a español (quitar /en)
+        if (currentPath === "/en" || currentPath === "/en/") {
+          newPath = "/";
+        } else {
+          newPath = currentPath.replace("/en", "");
+        }
       }
-      currentLanguageSpan.textContent = currentLanguage.toUpperCase();
-      flagImage.style.opacity = "1";
+
+      // Redirigir a la nueva ruta
+      window.location.href = newPath;
     }, 150);
   };
 

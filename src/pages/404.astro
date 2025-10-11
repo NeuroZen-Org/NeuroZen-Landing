@@ -1,0 +1,89 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Layout title={t("404.title")}>
+  <main
+    class="min-h-screen flex items-center justify-center bg-gradient-to-b from-[#033612] to-[#0a5c20] px-6"
+  >
+    <div class="max-w-2xl w-full text-center">
+      <!-- 404 Number -->
+      <div class="mb-8">
+        <h1
+          class="text-9xl md:text-[200px] font-bold text-white/20 leading-none"
+        >
+          404
+        </h1>
+      </div>
+
+      <!-- Error Message -->
+      <div class="space-y-6">
+        <h2 class="text-4xl md:text-5xl font-bold text-white">
+          {t("404.title")}
+        </h2>
+
+        <p class="text-xl text-green-100 max-w-lg mx-auto">
+          {t("404.description")}
+        </p>
+
+        <!-- Back to Home Button -->
+        <div class="pt-8">
+          <a
+            href={lang === "en" ? "/en" : "/"}
+            class="inline-flex items-center gap-2 px-8 py-4 bg-green-500 hover:bg-green-600 text-white font-semibold text-lg rounded-lg transition-all duration-200 hover:scale-105 shadow-xl"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            {t("404.button")}
+          </a>
+        </div>
+      </div>
+
+      <!-- Decorative Elements -->
+      <div class="mt-16 flex justify-center gap-4">
+        <div
+          class="w-3 h-3 bg-green-400 rounded-full animate-bounce"
+          style="animation-delay: 0s"
+        >
+        </div>
+        <div
+          class="w-3 h-3 bg-green-400 rounded-full animate-bounce"
+          style="animation-delay: 0.2s"
+        >
+        </div>
+        <div
+          class="w-3 h-3 bg-green-400 rounded-full animate-bounce"
+          style="animation-delay: 0.4s"
+        >
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  @keyframes bounce {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+</style>

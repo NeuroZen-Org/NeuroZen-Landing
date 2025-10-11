@@ -5,6 +5,10 @@ import HamburgerLogo from "@/assets/Icons/hamburguesa.svg";
 import LanguageSwitcher from "./ui/LanguageSwitcher.astro";
 import MobileMenu from "./ui/MobileMenu.astro";
 import menuItems from "@/consts/menu-item";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <header class="flex w-full p-5 items-start bg-[#033612b6]">
@@ -31,7 +35,7 @@ import menuItems from "@/consts/menu-item";
                 href={item.href}
                 class="menu-item block px-4 py-3 text-white text-lg hover:bg-white/10 rounded-lg transition-all duration-200 hover:-translate-y-2"
               >
-                {item.name}
+                {t(item.name as any)}
               </a>
             </li>
           ))
