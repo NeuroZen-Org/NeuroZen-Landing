@@ -1,11 +1,11 @@
 import type { MenuItem } from "@/types/MenuItem";
 
 const menuItems: MenuItem[] = [
-  { name: "Beneficios", href: "#beneficios" },
-  { name: "Ejercicios", href: "#ejercicios" },
-  { name: "Planes", href: "#planes" },
-  { name: "Comentarios", href: "#comentarios" },
-  { name: "Psicólogos", href: "#psicologos" },
+  { name: "nav.benefits", href: "#beneficios" },
+  { name: "nav.exercises", href: "#ejercicios" },
+  { name: "nav.plans", href: "#planes" },
+  { name: "nav.comments", href: "#comentarios" },
+  { name: "nav.psychologists", href: "#psicologos" },
 ];
 
 export default menuItems;
