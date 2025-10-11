@@ -2,7 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 import LanguageSwitcher from "@/components/HeaderComponents/components/LanguageSwitcher.astro";
-import Toast from "@/components/ui/Toast.astro";
+import Toast from "@/components/MainComponents/ui/Toast.astro";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
