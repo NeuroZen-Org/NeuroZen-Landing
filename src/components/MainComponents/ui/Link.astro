@@ -8,7 +8,7 @@ interface Props {
 const { styles, text, href } = Astro.props;
 
 const isExternal = href.startsWith("http://") || href.startsWith("https://");
-const anchorTarget = isExternal ? "_blank" : "";
+const anchorTarget = isExternal ? "_blank" : undefined;
 ---
 
 <a
