@@ -52,6 +52,7 @@ const isSpanish = lang === "es";
     setTimeout(() => {
       const currentLanguage = getLanguageFromPath();
       const currentPath = window.location.pathname;
+      const queryString = window.location.search; // Preservar parámetros de URL
       let newPath = "";
 
       if (currentLanguage === "es") {
@@ -70,8 +71,8 @@ const isSpanish = lang === "es";
         }
       }
 
-      // Redirigir a la nueva ruta
-      window.location.href = newPath;
+      // Redirigir a la nueva ruta con parámetros preservados
+      window.location.href = newPath + queryString;
     }, 150);
   };
 
