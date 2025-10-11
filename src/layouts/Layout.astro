@@ -1,5 +1,11 @@
 ---
 import "../styles/global.css";
+interface Props {
+  title?: string;
+}
+
+const { title = "NeuroZen | Gestiona tu estrés y bienestar emocional" } =
+  Astro.props;
 ---
 
 <!doctype html>
@@ -12,7 +18,7 @@ import "../styles/global.css";
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title data-i18n="pageTitle">
-      NeuroZen | Gestiona tu estrés y bienestar emocional
+      {title}
     </title>
     <meta
       name="description"
