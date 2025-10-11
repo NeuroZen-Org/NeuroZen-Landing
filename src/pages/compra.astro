@@ -245,7 +245,6 @@ const planPrice = url.searchParams.get("price") || "$0";
 </Layout>
 
 <script>
-  // Translation map for plan names
   const planTranslations: Record<string, Record<string, string>> = {
     es: {
       Basic: "Básico",
@@ -268,10 +267,8 @@ const planPrice = url.searchParams.get("price") || "$0";
   const planNameParam = urlParams.get("plan") || "Plan no especificado";
   const planPrice = urlParams.get("price") || "$0";
 
-  // Get current language from URL
   const currentLang = window.location.pathname.startsWith("/en") ? "en" : "es";
 
-  // Translate plan name
   const planName =
     planTranslations[currentLang][planNameParam] || planNameParam;
 
@@ -339,7 +336,7 @@ const planPrice = url.searchParams.get("price") || "$0";
       // Redirigir a la landing
       setTimeout(() => {
         window.location.href = "/";
-      }, 300); // Esperar a que termine la animación
+      }, 300);
     }, 2000);
   }
 
