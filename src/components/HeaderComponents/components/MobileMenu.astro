@@ -1,0 +1,123 @@
+---
+import CloseIcon from "@/assets/Icons/close.svg";
+import menuItems from "@/consts/menu-item";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<!-- Overlay -->
+<div
+  id="mobile-menu-overlay"
+  class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 opacity-0 pointer-events-none transition-opacity duration-300"
+>
+</div>
+
+<!-- Menu Panel -->
+<nav
+  id="mobile-menu"
+  class="fixed top-0 right-0 h-full w-[280px] bg-gradient-to-b from-[#033612] to-[#0a5c20] z-50 transform translate-x-full transition-transform duration-300 ease-in-out shadow-2xl"
+>
+  <!-- Header del menu -->
+  <div class="flex items-center justify-between p-5 border-b border-white/20">
+    <h3 class="text-white text-xl font-bold">{t("nav.menu")}</h3>
+    <button
+      id="close-menu"
+      class="p-2 hover:bg-white/10 rounded-lg transition-colors duration-200"
+      aria-label="Cerrar menú"
+    >
+      <img src={CloseIcon.src} alt="Cerrar" class="w-6 h-6 invert" />
+    </button>
+  </div>
+
+  <!-- Menu Items -->
+  <ul class="flex flex-col p-5 gap-2">
+    {
+      menuItems.map((item) => (
+        <li>
+          <a
+            href={item.href}
+            class="menu-item block px-4 py-3 text-white text-lg hover:bg-white/10 rounded-lg transition-all duration-200 hover:translate-x-2"
+          >
+            {t(item.name as any)}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+
+  <!-- Footer del menu (opcional) -->
+  <div class="absolute bottom-5 left-5 right-5">
+    <a
+      href="https://neurozen-frontend.web.app"
+      target="_blank"
+      class="block w-full text-center px-4 py-3 bg-green-gradient-start hover:bg-[#76ca50] text-white font-semibold rounded-lg transition-all duration-200 hover:scale-105"
+    >
+      {t("hero.cta.button")}
+    </a>
+  </div>
+</nav>
+
+<script>
+  const mobileMenu = document.getElementById("mobile-menu");
+  const overlay = document.getElementById("mobile-menu-overlay");
+  const closeMenuBtn = document.getElementById("close-menu");
+  const menuItems = document.querySelectorAll(".menu-item");
+
+  // Función para abrir el menú
+  const openMenu = () => {
+    mobileMenu?.classList.remove("translate-x-full");
+    overlay?.classList.remove("opacity-0", "pointer-events-none");
+    document.body.style.overflow = "hidden"; // Prevenir scroll del body
+  };
+
+  // Función para cerrar el menú
+  const closeMenu = () => {
+    mobileMenu?.classList.add("translate-x-full");
+    overlay?.classList.add("opacity-0", "pointer-events-none");
+    document.body.style.overflow = ""; // Restaurar scroll
+  };
+
+  // Event listeners
+  closeMenuBtn?.addEventListener("click", closeMenu);
+  overlay?.addEventListener("click", closeMenu);
+
+  // Cerrar menú al hacer click en cualquier item
+  menuItems.forEach((item) => {
+    item.addEventListener("click", closeMenu);
+  });
+
+  // Cerrar con tecla Escape
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      closeMenu();
+    }
+  });
+
+  // Exponer la función openMenu globalmente para que el botón hamburguesa pueda usarla
+  (window as any).openMobileMenu = openMenu;
+</script>
+
+<style>
+  /* Animación suave para los items del menu */
+  .menu-item {
+    position: relative;
+  }
+
+  .menu-item::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 0;
+    background: #76ca50;
+    transition: height 0.2s ease;
+  }
+
+  .menu-item:hover::before {
+    height: 70%;
+  }
+</style>
