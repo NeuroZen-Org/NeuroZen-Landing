@@ -1,12 +1,22 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import LanguageSwitcher from "@/components/HeaderComponents/ui/LanguageSwitcher.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
 const url = new URL(Astro.request.url);
-const planName = url.searchParams.get("plan") || "Plan no especificado";
+const planName = url.searchParams.get("plan") || t("purchase.notSpecified");
 const planPrice = url.searchParams.get("price") || "$0";
 ---
 
-<Layout title={`Comprar - NeuroZen`}>
+<Layout title={`${t("purchase.title")} - NeuroZen`}>
+  <!-- Language Switcher -->
+  <div class="fixed top-6 right-6 z-50">
+    <LanguageSwitcher />
+  </div>
+
   <!-- Toast Notification -->
   <div
     id="toast"
@@ -29,10 +39,8 @@ const planPrice = url.searchParams.get("price") || "$0";
           d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
       </svg>
       <div>
-        <p class="font-semibold">¡Compra exitosa!</p>
-        <p class="text-sm text-green-100">
-          Redirigiendo a la página principal...
-        </p>
+        <p class="font-semibold">{t("purchase.success")}</p>
+        <p class="text-sm text-green-100">Redirecting to homepage...</p>
       </div>
     </div>
   </div>
@@ -42,28 +50,30 @@ const planPrice = url.searchParams.get("price") || "$0";
       <!-- Header -->
       <div class="text-center mb-12">
         <h1 class="text-4xl font-bold text-gray-800 mb-4">
-          Completa tu compra
+          {t("purchase.title")}
         </h1>
         <p class="text-gray-600">
-          Estás a un paso de mejorar tu bienestar con NeuroZen
+          You're one step away from improving your wellbeing with NeuroZen
         </p>
       </div>
 
       <!-- Plan Selected -->
-      <div class="bg-white rounded-2xl shadow-lg p-8 border-2 border-green-500">
+      <div
+        class="bg-white rounded-2xl shadow-lg p-8 border-2 border-green-500 mb-8"
+      >
         <div class="flex justify-between items-center">
           <div>
             <h2 id="plan-name" class="text-2xl font-bold text-gray-800 mb-2">
-              {planName || "Cargando..."}
+              {planName || "Loading..."}
             </h2>
-            <p class="text-gray-600">Plan seleccionado</p>
+            <p class="text-gray-600">{t("purchase.plan")}</p>
           </div>
 
           <div class="text-right">
             <p id="plan-price" class="text-3xl font-bold text-green-600">
               {planPrice || "$0"}
             </p>
-            <p class="text-sm text-gray-500">por mes</p>
+            <p class="text-sm text-gray-500">per month</p>
           </div>
         </div>
       </div>
@@ -73,7 +83,7 @@ const planPrice = url.searchParams.get("price") || "$0";
           <!-- Purchase Form -->
           <div class="bg-white rounded-2xl shadow-lg p-8">
             <h3 class="text-2xl font-semibold text-gray-800 mb-6">
-              Información de pago
+              Payment Information
             </h3>
 
             <form class="space-y-6">
@@ -84,14 +94,14 @@ const planPrice = url.searchParams.get("price") || "$0";
                     for="firstName"
                     class="block text-sm font-medium text-gray-700 mb-2"
                   >
-                    Nombre
+                    {t("purchase.form.name")}
                   </label>
                   <input
                     type="text"
                     id="firstName"
                     required
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
-                    placeholder="Juan"
+                    placeholder={t("purchase.form.name.placeholder")}
                   />
                 </div>
                 <div>
@@ -99,14 +109,14 @@ const planPrice = url.searchParams.get("price") || "$0";
                     for="lastName"
                     class="block text-sm font-medium text-gray-700 mb-2"
                   >
-                    Apellido
+                    Last Name
                   </label>
                   <input
                     type="text"
                     id="lastName"
                     required
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
-                    placeholder="Pérez"
+                    placeholder="Doe"
                   />
                 </div>
               </div>
@@ -116,21 +126,21 @@ const planPrice = url.searchParams.get("price") || "$0";
                   for="email"
                   class="block text-sm font-medium text-gray-700 mb-2"
                 >
-                  Email
+                  {t("purchase.form.email")}
                 </label>
                 <input
                   type="email"
                   id="email"
                   required
                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
-                  placeholder="tu@email.com"
+                  placeholder={t("purchase.form.email.placeholder")}
                 />
               </div>
 
               <!-- Información de Tarjeta -->
               <div class="border-t pt-6">
                 <h4 class="text-lg font-semibold text-gray-800 mb-4">
-                  Información de tarjeta
+                  Card Information
                 </h4>
 
                 <div class="space-y-4">
@@ -139,7 +149,7 @@ const planPrice = url.searchParams.get("price") || "$0";
                       for="cardNumber"
                       class="block text-sm font-medium text-gray-700 mb-2"
                     >
-                      Número de tarjeta
+                      {t("purchase.form.card")}
                     </label>
                     <input
                       type="text"
@@ -147,7 +157,7 @@ const planPrice = url.searchParams.get("price") || "$0";
                       required
                       maxlength="19"
                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
-                      placeholder="1234 5678 9012 3456"
+                      placeholder={t("purchase.form.card.placeholder")}
                     />
                   </div>
 
@@ -157,7 +167,7 @@ const planPrice = url.searchParams.get("price") || "$0";
                         for="expiry"
                         class="block text-sm font-medium text-gray-700 mb-2"
                       >
-                        Fecha de expiración
+                        {t("purchase.form.expiry")}
                       </label>
                       <input
                         type="text"
@@ -165,7 +175,7 @@ const planPrice = url.searchParams.get("price") || "$0";
                         required
                         maxlength="5"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
-                        placeholder="MM/YY"
+                        placeholder={t("purchase.form.expiry.placeholder")}
                       />
                     </div>
                     <div>
@@ -173,7 +183,7 @@ const planPrice = url.searchParams.get("price") || "$0";
                         for="cvv"
                         class="block text-sm font-medium text-gray-700 mb-2"
                       >
-                        CVV
+                        {t("purchase.form.cvv")}
                       </label>
                       <input
                         type="text"
@@ -181,7 +191,7 @@ const planPrice = url.searchParams.get("price") || "$0";
                         required
                         maxlength="4"
                         class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200"
-                        placeholder="123"
+                        placeholder={t("purchase.form.cvv.placeholder")}
                       />
                     </div>
                   </div>
@@ -193,7 +203,7 @@ const planPrice = url.searchParams.get("price") || "$0";
                 type="submit"
                 class="w-full px-6 py-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold text-lg rounded-lg hover:from-green-600 hover:to-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02]"
               >
-                Completar compra
+                {t("purchase.form.submit")}
               </button>
             </form>
 
@@ -215,17 +225,17 @@ const planPrice = url.searchParams.get("price") || "$0";
                   d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
                 ></path>
               </svg>
-              <span>Pago seguro y encriptado</span>
+              <span>Secure and encrypted payment</span>
             </div>
           </div>
 
           <!-- Back Link -->
           <div class="text-center mt-8">
             <a
-              href="/#planes"
+              href="/en/#planes"
               class="text-green-600 hover:text-green-700 font-medium transition-colors duration-200"
             >
-              ← Volver a planes
+              ← Back to plans
             </a>
           </div>
         </div>
@@ -235,12 +245,37 @@ const planPrice = url.searchParams.get("price") || "$0";
 </Layout>
 
 <script>
-  // Obtener parámetros de la URL desde el cliente
+  // Translation map for plan names
+  const planTranslations: Record<string, Record<string, string>> = {
+    es: {
+      Basic: "Básico",
+      Básico: "Básico",
+      Advanced: "Avanzado",
+      Avanzado: "Avanzado",
+      "Professional (Zen+)": "Professional (Zen+)",
+    },
+    en: {
+      Basic: "Basic",
+      Básico: "Basic",
+      Advanced: "Advanced",
+      Avanzado: "Advanced",
+      "Professional (Zen+)": "Professional (Zen+)",
+    },
+  };
+
+  // Get URL parameters from client side
   const urlParams = new URLSearchParams(window.location.search);
-  const planName = urlParams.get("plan") || "Plan no especificado";
+  const planNameParam = urlParams.get("plan") || "Plan not specified";
   const planPrice = urlParams.get("price") || "$0";
 
-  // Actualizar el DOM con los valores
+  // Get current language from URL
+  const currentLang = window.location.pathname.startsWith("/en") ? "en" : "es";
+
+  // Translate plan name
+  const planName =
+    planTranslations[currentLang][planNameParam] || planNameParam;
+
+  // Update DOM with values
   const planNameElement = document.getElementById("plan-name");
   const planPriceElement = document.getElementById("plan-price");
 
@@ -252,10 +287,10 @@ const planPrice = url.searchParams.get("price") || "$0";
     planPriceElement.textContent = planPrice;
   }
 
-  // Actualizar el título de la página
-  document.title = `Comprar ${planName} - NeuroZen`;
+  // Update page title
+  document.title = `Buy ${planName} - NeuroZen`;
 
-  // Formatear número de tarjeta
+  // Format card number
   const cardNumberInput = document.getElementById(
     "cardNumber"
   ) as HTMLInputElement;
@@ -266,7 +301,7 @@ const planPrice = url.searchParams.get("price") || "$0";
     target.value = formattedValue;
   });
 
-  // Formatear fecha de expiración
+  // Format expiry date
   const expiryInput = document.getElementById("expiry") as HTMLInputElement;
   expiryInput?.addEventListener("input", (e) => {
     const target = e.target as HTMLInputElement;
@@ -277,19 +312,19 @@ const planPrice = url.searchParams.get("price") || "$0";
     target.value = value;
   });
 
-  // Solo números en CVV
+  // Only numbers in CVV
   const cvvInput = document.getElementById("cvv") as HTMLInputElement;
   cvvInput?.addEventListener("input", (e) => {
     const target = e.target as HTMLInputElement;
     target.value = target.value.replace(/\D/g, "");
   });
 
-  // Función para mostrar el toast
+  // Function to show toast
   function showToast() {
     const toast = document.getElementById("toast");
     if (!toast) return;
 
-    // Mostrar el toast
+    // Show toast
     toast.classList.remove(
       "opacity-0",
       "pointer-events-none",
@@ -297,14 +332,14 @@ const planPrice = url.searchParams.get("price") || "$0";
     );
     toast.classList.add("opacity-100", "translate-y-0");
 
-    // Ocultar y redirigir después de 2 segundos
+    // Hide and redirect after 2 seconds
     setTimeout(() => {
       toast.classList.add("opacity-0", "-translate-y-full");
 
-      // Redirigir a la landing
+      // Redirect to landing
       setTimeout(() => {
-        window.location.href = "/";
-      }, 300); // Esperar a que termine la animación
+        window.location.href = "/en/";
+      }, 300); // Wait for animation to finish
     }, 2000);
   }
 
