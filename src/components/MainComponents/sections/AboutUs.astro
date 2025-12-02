@@ -1,0 +1,24 @@
+---
+import Section from "../components/Section.astro";
+
+import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import Video from "../components/Video.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<Section
+  id="nosotros"
+  title={t("about.title")}
+  description={t("about.description")}
+>
+  <Video
+    title={t("about.team.title")}
+    description={t("about.team.description")}
+  />
+  <Video
+    title={t("about.product.title")}
+    description={t("about.product.description")}
+  />
+</Section>
