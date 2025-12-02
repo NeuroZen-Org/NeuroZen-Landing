@@ -11,8 +11,7 @@ interface Props {
 
 const { features, name, price, subtitle, isAdvanced } = Astro.props;
 
-const purchaseUrl = `/compra?plan=${encodeURIComponent(name)}&price=${encodeURIComponent(price)}`;
-// href="https://neurozen-frontend.web.app/subscriptions"
+const purchaseUrl = `https://neurozen-frontend.web.app/subscriptions`;
 ---
 
 <div
