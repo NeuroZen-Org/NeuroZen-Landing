@@ -78,6 +78,16 @@ export const ui = {
     "plans.features": "Características",
     "plans.choose": "Elegir plan",
 
+    "about.title": "Sobre Nosotros",
+    "about.description":
+      "Conoce más sobre NeuroZen y el equipo detrás de la plataforma",
+    "about.team.title": "Nuestro Equipo",
+    "about.team.description":
+      "Conoce a las personas que hacen posible NeuroZen",
+    "about.product.title": "Nuestro Producto",
+    "about.product.description":
+      "Descubre cómo funciona NeuroZen y sus características",
+
     "comments.title": "Lo que dicen nuestros usuarios",
     "comments.description":
       "Descubre cómo NeuroZen ha transformado la vida de miles de personas",
@@ -216,6 +226,14 @@ export const ui = {
     "plans.monthly": "month",
     "plans.features": "Features",
     "plans.choose": "Choose plan",
+
+    "about.title": "About Us",
+    "about.description":
+      "Learn more about NeuroZen and the team behind the platform",
+    "about.team.title": "Our Team",
+    "about.team.description": "Meet the people who make NeuroZen possible",
+    "about.product.title": "Our Product",
+    "about.product.description": "Discover how NeuroZen works and its features",
 
     "comments.title": "What our users say",
     "comments.description":
