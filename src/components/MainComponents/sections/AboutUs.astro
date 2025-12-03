@@ -15,14 +15,16 @@ const t = useTranslations(lang);
   title={t("about.title")}
   description={t("about.description")}
 >
-  <Video
-    title={t("about.team.title")}
-    description={t("about.team.description")}
-    srcLink={AboutTheTeamVideo}
-  />
-  <Video
-    title={t("about.product.title")}
-    description={t("about.product.description")}
-    srcLink={AboutTheProductVideo}
-  />
+  <div class="flex gap-10">
+    <Video
+      title={t("about.team.title")}
+      description={t("about.team.description")}
+      srcLink={AboutTheTeamVideo}
+    />
+    <Video
+      title={t("about.product.title")}
+      description={t("about.product.description")}
+      srcLink={AboutTheProductVideo}
+    />
+  </div>
 </Section>
