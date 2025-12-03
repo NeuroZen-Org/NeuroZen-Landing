@@ -1,8 +1,9 @@
 ---
-import type { Psychologist } from "@/types/Psychologist";
+import type { Psychologist } from "@/types/psychologist";
 import { formatPsychologistName } from "@/helpers/formatPsychologistName";
 import Link from "../ui/Link.astro";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
+import { PUBLIC_NEUROZEN_FRONTEND } from "astro:env/client";
 
 interface Props {
   psychologist: Psychologist;
@@ -16,6 +17,8 @@ const t = useTranslations(lang);
 const psychologistName = formatPsychologistName(psychologist);
 const imageAlt = `Foto ${psychologistName}`;
 const isEven = index % 2 === 0;
+
+const bookSessionUrl = `${PUBLIC_NEUROZEN_FRONTEND}/book-session`;
 ---
 
 <article
@@ -87,7 +90,7 @@ const isEven = index % 2 === 0;
       {psychologist.description}
     </p>
     <Link
-      href="#"
+      href={bookSessionUrl}
       text={t("psychologists.schedule")}
       styles="mt-2 px-6 py-2.5 self-center md:self-start"
     />
