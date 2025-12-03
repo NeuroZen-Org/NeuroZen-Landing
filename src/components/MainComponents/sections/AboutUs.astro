@@ -3,8 +3,12 @@ import Section from "../components/Section.astro";
 
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
 import Video from "../components/Video.astro";
-import AboutTheTeamVideo from "@/assets/videos/abt_the_team.mp4";
-import AboutTheProductVideo from "@/assets/videos/abt_the_product.mp4";
+
+const aboutTheTeamVideo =
+  "https://drive.google.com/file/d/1AsHxJ_o9XktLwfX1jvPffU_DcaPWIKiE/preview";
+
+const aboutTheProductVideo =
+  "https://drive.google.com/file/d/1XRbIPGsCtUU8FICERQq0OZMhL1kUx97u/preview";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -19,12 +23,12 @@ const t = useTranslations(lang);
     <Video
       title={t("about.team.title")}
       description={t("about.team.description")}
-      srcLink={AboutTheTeamVideo}
+      srcLink={aboutTheProductVideo}
     />
     <Video
       title={t("about.product.title")}
       description={t("about.product.description")}
-      srcLink={AboutTheProductVideo}
+      srcLink={aboutTheTeamVideo}
     />
   </div>
 </Section>
