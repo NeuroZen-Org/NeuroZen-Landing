@@ -4,11 +4,10 @@ import Psychologist from "../components/Psychologist.astro";
 import { psychologists } from "@/consts/psychologists";
 import Link from "../ui/Link.astro";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
-import { PUBLIC_NEUROZEN_FRONTEND } from "astro:env/client";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-const bookSessionUrl = `${PUBLIC_NEUROZEN_FRONTEND}/book-session`;
+const bookSessionUrl = "https://neurozen-frontend.web.app/book-session";
 ---
 
 <Section

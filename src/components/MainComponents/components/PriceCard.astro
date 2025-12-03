@@ -1,6 +1,5 @@
 ---
 import Link from "../ui/Link.astro";
-import { PUBLIC_NEUROZEN_FRONTEND } from "astro:env/client";
 
 interface Props {
   name: string;
@@ -12,7 +11,7 @@ interface Props {
 
 const { features, name, price, subtitle, isAdvanced } = Astro.props;
 
-const purchaseUrl = `${PUBLIC_NEUROZEN_FRONTEND}/subscriptions`;
+const purchaseUrl = "https://neurozen-frontend.web.app/subscriptions";
 ---
 
 <div

@@ -2,7 +2,6 @@
 import CloseIcon from "@/assets/Icons/close.svg";
 import menuItems from "@/consts/menu-item";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
-import { PUBLIC_NEUROZEN_FRONTEND } from "astro:env/client";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -50,7 +49,7 @@ const t = useTranslations(lang);
 
   <div class="absolute bottom-5 left-5 right-5">
     <a
-      href={PUBLIC_NEUROZEN_FRONTEND}
+      href="https://neurozen-frontend.web.app"
       target="_blank"
       class="block w-full text-center px-4 py-3 bg-green-gradient-start hover:bg-[#76ca50] text-white font-semibold rounded-lg transition-all duration-200 hover:scale-105"
     >

@@ -3,7 +3,6 @@ import type { Psychologist } from "@/types/psychologist";
 import { formatPsychologistName } from "@/helpers/formatPsychologistName";
 import Link from "../ui/Link.astro";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
-import { PUBLIC_NEUROZEN_FRONTEND } from "astro:env/client";
 
 interface Props {
   psychologist: Psychologist;
@@ -18,7 +17,7 @@ const psychologistName = formatPsychologistName(psychologist);
 const imageAlt = `Foto ${psychologistName}`;
 const isEven = index % 2 === 0;
 
-const bookSessionUrl = `${PUBLIC_NEUROZEN_FRONTEND}/book-session`;
+const bookSessionUrl = "https://neurozen-frontend.web.app/book-session";
 ---
 
 <article
